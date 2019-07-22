@@ -120,6 +120,12 @@ export default class Video extends Component {
     }
   };
 
+  _onRemotePlayPause = () => {
+    if (this.props.onRemotePlayPause) {
+      this.props.onRemotePlayPause();
+    }
+  };
+
   _onBandwidthUpdate = (event) => {
     if (this.props.onBandwidthUpdate) {
       this.props.onBandwidthUpdate(event.nativeEvent);
@@ -284,6 +290,7 @@ export default class Video extends Component {
       onVideoLoad: this._onLoad,
       onVideoError: this._onError,
       onVideoProgress: this._onProgress,
+      onRemotePlayPause: this._onRemotePlayPause,
       onVideoSeek: this._onSeek,
       onVideoEnd: this._onEnd,
       onVideoBuffer: this._onBuffer,
@@ -446,6 +453,7 @@ Video.propTypes = {
   onBuffer: PropTypes.func,
   onError: PropTypes.func,
   onProgress: PropTypes.func,
+  onRemotePlayPause: PropTypes.func,
   onBandwidthUpdate: PropTypes.func,
   onSeek: PropTypes.func,
   onEnd: PropTypes.func,

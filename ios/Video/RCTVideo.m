@@ -5,6 +5,7 @@
 #import <React/UIView+React.h>
 #include <MediaAccessibility/MediaAccessibility.h>
 #include <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 static NSString *const statusKeyPath = @"status";
 static NSString *const playbackLikelyToKeepUpKeyPath = @"playbackLikelyToKeepUp";
@@ -113,6 +114,29 @@ static int const RCTVideoUnset = -1;
 #if __has_include(<react-native-video/RCTVideoCache.h>)
     _videoCache = [RCTVideoCache sharedInstance];
 #endif
+
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    [commandCenter.togglePlayPauseCommand setEnabled:YES];
+    [commandCenter.playCommand setEnabled:YES];
+    [commandCenter.pauseCommand setEnabled:YES];
+
+    [commandCenter.togglePlayPauseCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        self.onRemotePlayPause(@{});
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+
+    [commandCenter.playCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        NSString *temp = @"---> PL2 <---";
+        printf("%s\n", [temp UTF8String]);
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+
+    [commandCenter.pauseCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        NSString *temp = @"---> PL3 <---";
+        printf("%s\n", [temp UTF8String]);
+        return MPRemoteCommandHandlerStatusSuccess;
+    }];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillResignActive:)
                                                  name:UIApplicationWillResignActiveNotification
