@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.session.MediaSession;
+import android.os.Build;
 import android.view.KeyEvent;
 import android.content.Intent;
 import android.net.Uri;
@@ -417,7 +418,9 @@ class ReactExoplayerView extends FrameLayout implements
         List<Rect> exclusions = Collections.singletonList(
                 new Rect(getLeft(), getTop(), getRight(), getBottom()+100)
         );
-        ViewCompat.setSystemGestureExclusionRects(this, exclusions);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            view.setSystemGestureExclusionRects(exclusions);
+        }
     }
 
     private void initializePlayer() {
