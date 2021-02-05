@@ -139,10 +139,12 @@ static int const RCTVideoUnset = -1;
     }];
 
     [commandCenter.playCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        self.onRemotePlayPause(@{});
         return MPRemoteCommandHandlerStatusSuccess;
     }];
 
     [commandCenter.pauseCommand addTargetWithHandler: ^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
+        self.onRemotePlayPause(@{});
         return MPRemoteCommandHandlerStatusSuccess;
     }];
 
